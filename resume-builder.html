@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Resume Builder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .form-container {
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    #result {
+      padding: 30px;
+      border-top: 1px solid #e2e8f0;
+      display: none;
+    }
+
+    #result h2 {
+      margin-bottom: 16px;
+      color: #1e293b;
+    }
+
+    #result p {
+      margin-bottom: 12px;
+    }
+
+    .pdf-btn {
+      background: #10b981;
+      margin-top: 20px;
+      width: auto;
+      padding: 10px 20px;
+    }
+
+    .pdf-btn:hover {
+      background: #059669;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media print {
+      body { background: white; }
+      .form-container, footer { display: none; }
+      #result { 
+        display: block !important; 
+        border: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>🚀 Создайте резюме за 1 минуту</h1>
+      <p class="subtitle">ИИ адаптирует ваше резюме под любую вакансию. Бесплатно и без регистрации.</p>
+    </header>
+
+    <div class="form-container">
+      <div class="form-group">
+        <label for="name">Ваше имя</label>
+        <input type="text" id="name" placeholder="Алексей Иванов" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Ваш email</label>
+        <input type="email" id="email" placeholder="example@gmail.com" required>
+      </div>
+      <div class="form-group">
+        <label for="city">Город</label>
+        <input type="text" id="city" placeholder="Москва">
+      </div>
+      <div class="form-group">
+        <label for="education">Образование</label>
+        <textarea id="education" rows="2" placeholder="Например: МГУ, факультет экономики, 2020"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="career">Опыт работы</label>
+        <textarea id="career" rows="4" placeholder="Где работали, чем занимались, какие результаты достигли..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="skills">Ключевые навыки</label>
+        <input type="text" id="skills" placeholder="Python, управление проектами, английский B2">
+      </div>
+      <div class="form-group">
+        <label for="job">Целевая вакансия (опционально)</label>
+        <textarea id="job" rows="2" placeholder="Например: Product Manager в IT-компании"></textarea>
+      </div>
+      <button onclick="generateResume()">Создать резюме</button>
+    </div>
+
+    <div id="result"></div>
+
+    <footer>
+      &copy; 2026 AI Resume Builder — демо-версия
+    </footer>
+  </div>
+
+  <script>
+    function generateResume() {
+      const name = document.getElementById('name').value || 'Имя не указано';
+      const email = document.getElementById('email').value || 'email@example.com';
+      const city = document.getElementById('city').value || 'Город не указан';
+      const education = document.getElementById('education').value || 'Образование не указано';
+      const career = document.getElementById('career').value || 'Опыт не описан';
+      const skills = document.getElementById('skills').value || 'Навыки не указаны';
+      const job = document.getElementById('job').value || 'Любая подходящая позиция';
+
+      const resume = `
+        <h2>Ваше профессиональное резюме</h2>
+        <p><strong>Контакты:</strong> ${name}, ${email}, ${city}</p>
+        <p><strong>Цель:</strong> ${job}</p>
+        <p><strong>Образование:</strong></p>
+        <p>${education}</p>
+        <p><strong>Опыт работы:</strong></p>
+        <p>${career}</p>
+        <p><strong>Ключевые навыки:</strong> ${skills}</p>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #e2e8f0;">
+        <p style="color:#64748b; font-size:14px;">Это демо-версия. В полной версии ИИ адаптирует резюме под любую вакансию.</p>
+        <br>
+        <button class="pdf-btn" onclick="window.print()">🖨️ Сохранить как PDF</button>
+      `;
+
+      document.getElementById('result').innerHTML = resume;
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
