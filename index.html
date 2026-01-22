@@ -204,8 +204,9 @@
     </button>
   </div>
 
+  <!-- Новый ИИ-скрипт (безопасный, через прокси) -->
   <script>
-    function generateResume() {
+    async function generateResume() {
       const name = document.getElementById('name').value || 'Имя не указано';
       const email = document.getElementById('email').value || 'email@example.com';
       const city = document.getElementById('city').value || 'Город не указан';
@@ -214,30 +215,39 @@
       const skills = document.getElementById('skills').value || 'Навыки не указаны';
       const job = document.getElementById('job').value || 'Любая подходящая позиция';
 
-      const resume = `
-        <h2>Ваше профессиональное резюме</h2>
-        <p><strong>Контакты:</strong> ${name}, ${email}, ${city}</p>
-        <p><strong>Цель:</strong> ${job}</p>
-        <p><strong>Образование:</strong></p>
-        <p>${education}</p>
-        <p><strong>Опыт работы:</strong></p>
-        <p>${career}</p>
-        <p><strong>Ключевые навыки:</strong> ${skills}</p>
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #e2e8f0;">
-        <p style="color:#64748b; font-size:14px;">Это демо-версия. В полной версии ИИ адаптирует резюме под любую вакансию.</p>
-        <br>
-        <button class="pdf-btn" onclick="window.print()">🖨️ Сохранить как PDF</button>
-      `;
-
-      document.getElementById('result').innerHTML = resume;
+      // Показываем загрузку
+      document.getElementById('result').innerHTML = '<p>🧠 ИИ создаёт ваше резюме...</p>';
       document.getElementById('result').style.display = 'block';
-      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+
+      try {
+        const response = await fetch('https://myresumebot-ai.onrender.com/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name, email, city, education, career, skills, job
+          })
+        });
+
+        if (!response.ok) throw new Error('Сервер временно недоступен');
+
+        const data = await response.json();
+        const aiResume = data.resume;
+
+        document.getElementById('result').innerHTML = aiResume + 
+          `<br><button class="pdf-btn" onclick="window.print()">🖨️ Сохранить как PDF</button>`;
+        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+      } catch (error) {
+        console.error(error);
+        document.getElementById('result').innerHTML = 
+          `<p style="color:red;">❌ ${error.message}</p>` +
+          `<p>Попробуйте обновить страницу или написать нам через форму обратной связи.</p>` +
+          `<button class="pdf-btn" onclick="window.print()">🖨️ Сохранить как PDF</button>`;
+      }
     }
   </script>
 
-  <!-- Tally Embed Script -->
+  <!-- Tally Embed Script (без пробелов!) -->
   <script async src="https://tally.so/widgets/embed.js"></script>
   
 </body>
 </html>
-
