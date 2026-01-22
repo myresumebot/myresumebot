@@ -6,14 +6,13 @@
   <title>AI Resume Builder</title>
   
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-23XHTHK057"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-23XHTHK057');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-23XHTHK057"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-23XHTHK057');
+  </script>
   
   <style>
     * {
@@ -197,6 +196,14 @@
     </footer>
   </div>
 
+  <!-- Обратная связь -->
+  <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+    <button onclick="window.Tally.openPopup('A7B2K0', { width: 600 });" 
+            style="background: #8b5cf6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500;">
+      💬 Оставить отзыв
+    </button>
+  </div>
+
   <script>
     function generateResume() {
       const name = document.getElementById('name').value || 'Имя не указано';
@@ -227,19 +234,9 @@
       document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
     }
   </script>
-  
-  <!-- Обратная связь -->
-<div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-  <button onclick="window.Tally.openPopup('A7B2K0', { width: 600 });" 
-          style="background: #8b5cf6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500;">
-    💬 Оставить отзыв
-  </button>
-</div>
 
-<script async src="https://tally.so/widgets/embed.js"></script>
+  <!-- Tally Embed Script -->
+  <script async src="https://tally.so/widgets/embed.js"></script>
   
+</body>
 </html>
-
-
-
-
